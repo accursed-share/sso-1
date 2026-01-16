@@ -337,4 +337,73 @@ An implementation is SSO-1 v1.2 conformant if it:
 
 ---
 
+## Appendix C: Proof of Inference Model
+
+SSO-1 is designed to enable **verifiable proprietary signals** - providers can monetize their research ("alpha") while consumers can cryptographically verify signal authenticity.
+
+### C.1 What is Published (Open)
+
+| Component | Description | Purpose |
+|-----------|-------------|---------|
+| **Input Schema** | `MarketContext` structure | Consumers know exactly what data feeds the model |
+| **Output Schema** | `SignalAssessment` structure | Consumers know exactly what they receive |
+| **Model Hash** | `mr_enclave` in `TeeReceipt` | Proves which code produced the signal |
+| **Model Version** | `model_version` + `model_params_hash` | Tracks model iterations for reproducibility |
+| **Verification Logic** | On-chain program | Anyone can verify attestations |
+
+### C.2 What Remains Closed (Proprietary)
+
+| Component | Description | Protection Mechanism |
+|-----------|-------------|----------------------|
+| **Inference Model** | Scoring logic, algorithms | Executes only inside TEE |
+| **Model Weights** | Trained parameters | Never leaves TEE memory |
+| **Data Source Config** | Specific endpoints, API keys | Environment secrets in TEE |
+
+### C.3 The Proof of Inference Guarantee
+
+```
+┌────────────────────────────────────────────────────────────────────┐
+│  PROVIDER (Private)                                                │
+│  ┌──────────────────────────────────────────────────────────────┐ │
+│  │  TEE Enclave                                                  │ │
+│  │  • Model weights (CONFIDENTIAL)                               │ │
+│  │  • Scoring logic (CONFIDENTIAL)                               │ │
+│  │  • Produces: mr_enclave hash (PUBLIC)                         │ │
+│  └──────────────────────────────────────────────────────────────┘ │
+└────────────────────────────────────────────────────────────────────┘
+                              │
+                              ▼ Published
+┌────────────────────────────────────────────────────────────────────┐
+│  ON-CHAIN (Public)                                                 │
+│  • mr_enclave matches provider's audited enclave measurement       │
+│  • Signal was produced by verified code (not tampered)             │
+│  • MarketContext schema was followed (auditable inputs)            │
+│  • SignalAssessment schema was followed (auditable outputs)        │
+└────────────────────────────────────────────────────────────────────┘
+```
+
+This architecture enables:
+
+1. **Monetization**: Providers charge for signals without revealing their edge
+2. **Verification**: Consumers confirm signals came from the claimed model
+3. **Auditability**: Third parties can audit the enclave measurement
+4. **Trust Minimization**: No need to trust the provider - trust the attestation
+
+### C.4 Alpha Tax
+
+Providers can implement an "Alpha Tax" - charging consumers for access to signals while guaranteeing authenticity through cryptographic proof. The consumer pays for:
+
+- The **signal itself** (the subjective assessment)
+- The **guarantee** that it was produced by audited, tamper-proof code
+
+The consumer does NOT receive:
+
+- The model weights
+- The inference logic
+- The ability to replicate the signal independently
+
+This is the core value proposition of SSO-1: **verifiable proprietary inference**.
+
+---
+
 **End of Specification**
