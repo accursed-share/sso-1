@@ -321,11 +321,16 @@ An implementation is SSO-1 v1.2 conformant if it:
 
 | Value | Name | Description |
 |-------|------|-------------|
-| 0 | MOMENTUM | Trend-following signal |
-| 1 | MEAN_REVERSION | Mean reversion signal |
-| 2 | VOLATILITY | Volatility regime signal |
+| 0 | MOMENTUM | Trend continuation signal |
+| 1 | MEAN_REVERSION | Counter-trend signal |
+| 2 | VOLATILITY | Volatility regime detection |
 | 3 | LIQUIDITY | Liquidity condition signal |
-| 4-255 | RESERVED | Reserved for future use |
+| 4 | BREAKOUT | Range/level breakout signal |
+| 5 | RISK | Risk-on/risk-off regime signal |
+| 6 | CORRELATION | Cross-asset correlation shift |
+| 7 | ARBITRAGE | Pricing inefficiency signal |
+| 8 | SENTIMENT | Sentiment-derived signal |
+| 9-255 | RESERVED | Reserved for future use |
 
 ## Appendix B: Direction Values
 

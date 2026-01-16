@@ -63,6 +63,15 @@ docker-compose.override.yml
 # Switchboard secrets
 switchboard-secrets/
 
+# Config files (keep .example versions)
+config/oracle.toml
+config/switchboard.yaml
+!config/*.example.toml
+!config/*.example.yaml
+
+# Bootstrap scripts
+get-pip.py
+
 # =============================================================================
 # IDE & Editors
 # =============================================================================

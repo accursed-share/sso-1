@@ -54,11 +54,17 @@ class ScoringConfig:
 
 
 class SignalType(IntEnum):
-    """Signal type enumeration."""
-    MOMENTUM = 0
-    MEAN_REVERSION = 1
-    VOLATILITY = 2
-    LIQUIDITY = 3
+    """Signal type enumeration per SSO-1 Spec Appendix A."""
+    MOMENTUM = 0        # Trend continuation
+    MEAN_REVERSION = 1  # Counter-trend
+    VOLATILITY = 2      # Vol regime detection
+    LIQUIDITY = 3       # Liquidity conditions
+    BREAKOUT = 4        # Range/level breakout
+    RISK = 5            # Risk-on/risk-off regime
+    CORRELATION = 6     # Cross-asset correlation shift
+    ARBITRAGE = 7       # Pricing inefficiency
+    SENTIMENT = 8       # Sentiment-derived
+    # 9-255 reserved for future use
 
 
 class Direction(IntEnum):
