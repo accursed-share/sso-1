@@ -71,7 +71,7 @@ Use conventional commits:
 
 ## Security
 
-For security issues, please see [SECURITY.md](./SECURITY.md) or email security@your-org.com.
+For security issues, please see [SECURITY.md](./SECURITY.md) or email acephale4w@outlook.com.
 
 ## License
 
